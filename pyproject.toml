@@ -2,7 +2,7 @@
 name = "projectcityrecognition"
 version = "0.1.0"
 description = "Project 2 Yotta"
-authors = ["Julien Badoun, Olivier Collier and Cyril Lemaire"]
+authors = ["Julien Sadoun, Olivier Collier and Cyril Lemaire"]
 
 [tool.poetry.dependencies]
 python = "~3.8"
