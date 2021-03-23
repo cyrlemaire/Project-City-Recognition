@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "projectcityrecognition"
+version = "0.1.0"
+description = "Project 2 Yotta"
+authors = ["Julien Badoun, Olivier Collier and Cyril Lemaire"]
+
+[tool.poetry.dependencies]
+python = "~3.8"
+pandas = "^1.2.3"
+numpy = "^1.20.1"
+matplotlib = "^3.3.4"
+scipy = "^1.6.1"
+ipdb = "^0.13.7"
+jupyterlab = "^3.0.12"
+scikit-learn = "^0.24.1"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
