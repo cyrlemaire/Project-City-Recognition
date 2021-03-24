@@ -48,8 +48,10 @@ def fetch_image_urls(query: str, max_links_to_fetch: int, wd: webdriver, sleep_b
             actual_images = wd.find_elements_by_css_selector('img.n3VNCb')
             for actual_image in actual_images:
                 if actual_image.get_attribute('src') and 'http' in actual_image.get_attribute('src'):
-                    image_urls.add(actual_image.get_attribute('src'))
-
+                    if actual_image.get_attribute('src') is not None:
+                        image_urls.add(actual_image.get_attribute('src'))
+                    else:
+                        pass
             image_count = len(image_urls)
 
             if len(image_urls) >= max_links_to_fetch:
@@ -58,7 +60,7 @@ def fetch_image_urls(query: str, max_links_to_fetch: int, wd: webdriver, sleep_b
         else:
             print("Found:", len(image_urls), "image links, looking for more ...")
             time.sleep(30)
-            return
+            #return
             load_more_button = wd.find_element_by_css_selector(".mye4qd")
             if load_more_button:
                 wd.execute_script("document.querySelector('.mye4qd').click();")
@@ -94,14 +96,39 @@ def persist_image(folder_path: str, file_name: str, url: str):
 
 if __name__ == '__main__':
     wd = webdriver.Chrome(executable_path=DRIVER_PATH)
-    queries = ["Paris house", "Paris street", "Paris building"]  # change your set of queries here
+    queries = ['facade paris',
+               'building front paris',
+               'rue Paris',
+               'street Paris',
+               'logement Paris',
+               'housing Paris',
+               'batiment Paris',
+               'building Paris',
+               'house Paris',
+               'maison Paris',
+               'rue Monge Paris',
+               'boulevard saint germain Paris',
+               'rue des saint Peres Paris',
+               'Facade Londres',
+               'building front London',
+               'rue Londres',
+               'street London',
+               'logement Londres',
+               'housing London',
+               'batiment Londres',
+               'building London',
+               'house London',
+               'maison Londres',
+               'chelsea house London',
+               'brick house London',
+               'oxford street london']  # change your set of queries here
     for query in queries:
         wd.get('https://google.com')
         search_box = wd.find_element_by_css_selector('input.gLFyf')
         search_box.send_keys(query)
-        links = fetch_image_urls(query, 50, wd)
+        links = fetch_image_urls(query, 100, wd)
         # images_path = '/Users/anand/Desktop/contri/images'  #enter your desired image path
-        images_path = '/Users/cyrillemaire/Documents/Yotta/Project/Project_2/pictures_paris'
+        images_path = '/Users/cyrillemaire/Documents/Yotta/Project/Project_2/pictures'
         for i in links:
             persist_image(images_path, query, i)
     wd.quit()
