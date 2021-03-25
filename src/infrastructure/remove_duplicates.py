@@ -1,25 +1,39 @@
-import hashlib
 from matplotlib.pyplot import imread
 import matplotlib.pyplot as plt
 import os
+from PIL import Image
 
-os.chdir(r'/Users/cyrillemaire/Documents/Yotta/Project/Project_2/dup_test/London')
+os.chdir(r'/Users/cyrillemaire/Documents/Yotta/Project/Project_2/dup_test/paris')
 print(os.getcwd())
 
 files_list = os.listdir('.')
+
 print(len(files_list))
 
 duplicates = []
 hash_keys = dict()
 
 for index, filename in enumerate(os.listdir('.')):
-    if os.path.isfile(filename):
-        with open(filename, 'rb') as f:
-            filehash = hashlib.md5(f.read()).hexdigest()
-        if filehash not in hash_keys:
-            hash_keys[filehash] = index
-        else:
-            duplicates.append((index, hash_keys[filehash]))
+    if not filename.startswith('.'):
+        if os.path.isfile(filename):
+            print(os.getcwd())
+            img = Image.open(filename)
+            # reduce image:
+            img = img.resize((10, 10), Image.ANTIALIAS)
+            # reduce color
+            img = img.convert("L")
+            # find average pixel value
+            pixel_data = list(img.getdata())
+            avg_pixel = sum(pixel_data) / len(pixel_data)
+            # Compute hash in base 16:
+            bits = "".join(['1' if (px >= avg_pixel) else '0' for px in pixel_data])
+            filehash = str(hex(int(bits, 2)))[2:][::-1].upper()
+            #filehash = hashlib.md5(f.read()).hexdigest()
+
+            if filehash not in hash_keys:
+                hash_keys[filehash] = index
+            else:
+                duplicates.append((index, hash_keys[filehash]))
 
 print(duplicates)
 
