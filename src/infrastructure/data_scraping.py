@@ -6,7 +6,7 @@ from PIL import Image
 import io
 import hashlib
 
-# TODO: object oriented
+# TODO: object oriented web scrapper class
 
 # TODO: add a config file for paths and parameters
 
@@ -49,12 +49,15 @@ queries = ['facade paris',
 
 
 def fetch_image_urls(query: str, max_links_to_fetch: int, wd: webdriver, sleep_between_interactions: int = 1):
+    """Allows the webdriver to look for a query in google image and fetch a number of image links
+    corresponding to the query"""
+
     def scroll_to_end(wd):
+        """ Scroll to the end of the loaded page"""
         wd.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         time.sleep(sleep_between_interactions)
 
-        # build the google query
-
+    # build the google query
     search_url = "https://www.google.com/search?safe=off&site=&tbm=isch&source=hp&q={q}&oq={q}&gs_l=img"
 
     # load the page
@@ -107,6 +110,7 @@ def fetch_image_urls(query: str, max_links_to_fetch: int, wd: webdriver, sleep_b
 
 
 def persist_image(folder_path: str, file_name: str, url: str):
+    """ Download all the images from a set of urls and save them in a deedicated folder"""
     try:
         image_content = requests.get(url).content
 
@@ -131,8 +135,10 @@ def persist_image(folder_path: str, file_name: str, url: str):
 
 if __name__ == '__main__':
 
+    # instantiate the webdriver
     wd = webdriver.Chrome(executable_path=DRIVER_PATH)
 
+    # Go through each query and download corresponding images
     for query in queries:
         wd.get('https://google.com')
         search_box = wd.find_element_by_css_selector('input.gLFyf')
