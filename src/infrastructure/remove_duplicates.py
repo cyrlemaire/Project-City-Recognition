@@ -18,7 +18,7 @@ for index, filename in enumerate(os.listdir('.')):
         if os.path.isfile(filename):
             img = Image.open(filename)
             # reduce image:
-            img = img.resize((10, 10), Image.ANTIALIAS)
+            img = img.resize((6, 6), Image.ANTIALIAS)
             # reduce color
             img = img.convert("L")
             # find average pixel value
@@ -50,7 +50,7 @@ for file_indexes in duplicates[:30]:
 
 ans = input('Do you want to delete the duplicates? [y/n]')
 
-if ans == 'y' or 'yes':
+if ans == 'y':
     for index in duplicates:
         os.remove(files_list[index[0]])
 else:
