@@ -5,11 +5,17 @@ import warnings
 warnings.filterwarnings("ignore")
 
 from src.infrastructure.model import make_image_scaler, make_data_augmenter, make_specific_learner, base_model
-from src.infrastructure.data_loading import train_data, validation_data
+from src.infrastructure.data_loading import load_train_data
 from src.config.config import *
 
 
 if __name__ == '__main__':
+
+    # LOAD DATA
+    print('=========')
+    print('LOAD DATA')
+    print('=========')
+    train_data, validation_data = load_train_data()
 
     # MAKE MODEL
 
@@ -54,4 +60,4 @@ if __name__ == '__main__':
     print('SAVE MODEL')
     print('==========')
 
-    model.save(filepath=os.path.join(MODEL_DIR, 'PCR_model'))
+    model.save(filepath=os.path.join(MODEL_DIR, MODEL_NAME))
