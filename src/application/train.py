@@ -1,32 +1,22 @@
-
-import os
 import tensorflow as tf
 import warnings
 warnings.filterwarnings("ignore")
 
-from src.infrastructure.model import make_image_scaler, make_data_augmenter, make_specific_learner, base_model
-from src.infrastructure.data_loading import load_train_data
+from src.domain.model import make_image_scaler, make_specific_learner, base_model
+from src.infrastructure.data_generator import train_generator, valid_generator
 from src.config.config import *
 
 
 if __name__ == '__main__':
 
-    # LOAD DATA
-    print('=========')
-    print('LOAD DATA')
-    print('=========')
-    train_data, validation_data = load_train_data()
-
     # MAKE MODEL
 
     image_scaler = make_image_scaler()
-    data_augmenter = make_data_augmenter()
     base_model.trainable = False
     specific_learner = make_specific_learner(len(CLASSES))
 
     inputs = tf.keras.Input(shape=IMAGE_SHAPE)
     x = image_scaler(inputs)
-    x = data_augmenter(x)
     x = base_model(x, training=False)
     outputs = specific_learner(x)
     model = tf.keras.Model(inputs, outputs)
@@ -42,7 +32,7 @@ if __name__ == '__main__':
         metrics='accuracy',
     )
 
-    model.fit(train_data, validation_data=validation_data, epochs=EPOCHS)
+    model.fit(train_generator, validation_data=valid_generator, epochs=EPOCHS)
 
     # OPTIONALLY RETRAIN
 
@@ -54,7 +44,7 @@ if __name__ == '__main__':
             metrics=['accuracy'],
         )
 
-        model.fit(train_data, validation_data=validation_data, epochs=EPOCHS_RETRAIN)
+        model.fit(train_generator, validation_data=valid_generator, epochs=EPOCHS_RETRAIN)
 
     print('==========')
     print('SAVE MODEL')

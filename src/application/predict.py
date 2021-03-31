@@ -6,7 +6,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 from src.config.config import *
-from src.infrastructure.data_loading import load_test_data
+from src.infrastructure.data_generator import load_test_data
 
 if __name__ == '__main__':
 
