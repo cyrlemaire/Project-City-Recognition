@@ -14,13 +14,6 @@ def make_image_scaler():
     return image_rescaler
 
 
-def make_data_augmenter():
-    data_augmenter = tf.keras.Sequential([
-        tf.keras.layers.experimental.preprocessing.RandomRotation(0.1)
-    ])
-    return data_augmenter
-
-
 def make_specific_learner(number_classes):
     specific_learner = tf.keras.Sequential([
         tf.keras.layers.GlobalAveragePooling2D(),
