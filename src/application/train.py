@@ -41,7 +41,10 @@ if __name__ == '__main__':
         verbose=1,
         save_best_only=True)
 
-    model.fit(train_generator, validation_data=valid_generator, epochs=EPOCHS)
+    model.fit(train_generator,
+              validation_data=valid_generator,
+              epochs=EPOCHS,
+              callbacks=[model_checkpoint_callback])
 
     # OPTIONALLY RETRAIN
 
@@ -53,7 +56,10 @@ if __name__ == '__main__':
             metrics=['accuracy'],
         )
 
-        model.fit(train_generator, validation_data=valid_generator, epochs=EPOCHS_RETRAIN)
+        model.fit(train_generator,
+                  validation_data=valid_generator,
+                  epochs=EPOCHS_RETRAIN,
+                  callbacks=[model_checkpoint_callback])
 
     print('==========')
     print('SAVE MODEL')
