@@ -26,11 +26,20 @@ if __name__ == '__main__':
     print('TRAIN MODEL')
     print('===========')
 
+
+
     model.compile(
         optimizer=tf.keras.optimizers.Adam(),
         loss='categorical_crossentropy',
         metrics='accuracy',
     )
+
+    model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
+        filepath=CHECKPOINT_FILE_PATH,
+        monitor='val_accuracy',
+        mode='max',
+        verbose=1,
+        save_best_only=True)
 
     model.fit(train_generator, validation_data=valid_generator, epochs=EPOCHS)
 
