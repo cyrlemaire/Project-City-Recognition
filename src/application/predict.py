@@ -1,31 +1,25 @@
 
-import os
 import numpy as np
+import os
 import tensorflow as tf
 import warnings
 warnings.filterwarnings("ignore")
 
-from src.config.config import *
+import src.config.config as config
 from src.infrastructure.data_generator import load_test_data
 
 if __name__ == '__main__':
 
-    print('=========')
-    print('LOAD DATA')
-    print('=========')
+    # TODO: logging 'load data'
 
     test_data = load_test_data()
 
-    print('==========')
-    print('LOAD MODEL')
-    print('==========')
+    # TODO: logging 'load model'
 
-    model = tf.keras.models.load_model(os.path.join(MODEL_DIR, MODEL_NAME))
+    model = tf.keras.models.load_model(os.path.join(MODEL_DIR, FINAL_MODEL_NAME))
 
-    print('================')
-    print('MAKE PREDICTIONS')
-    print('================')
+    # TODO: logging 'make predictions'
 
-    pred = model.predict(test_data)
-    y_pred = np.argmax(pred, axis=1)
-    class_pred = [CLASSES[i] for i in y_pred]
+    predictions = model.predict(test_data)
+    y_predictions = np.argmax(predictions, axis=1)
+    class_predictions = [CLASSES[i] for i in y_predictions]
