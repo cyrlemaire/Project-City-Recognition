@@ -1,52 +1,26 @@
+import hashlib
+import io
+from PIL import Image
+import requests
 from selenium import webdriver
 import time
-import requests
-import os
-from PIL import Image
-import io
-import hashlib
 
-# TODO: object oriented web scrapper class
+from src.config.config import *
 
-# TODO: add a config file for paths and parameters
-
-# Path for your ChromeDriver here:
-DRIVER_PATH = '/Users/cyrillemaire/Documents/Yotta/Project/Project_2/Chrome_drivers/chromedriver'
-
-# Path for your images folder
-IMAGES_PATH = '/Users/cyrillemaire/Documents/Yotta/Project/Project_2/pictures'
-
-# Number of imagees per query:
-n_images = 100
-
-# Change your set of queries here:
-queries = ['facade paris',
-               'building front paris',
-               'rue Paris',
-               'street Paris',
-               'logement Paris',
-               'housing Paris',
-               'batiment Paris',
-               'building Paris',
-               'house Paris',
-               'maison Paris',
-               'rue Monge Paris',
-               'boulevard saint germain Paris',
-               'rue des saint Peres Paris',
-               'Facade Londres',
-               'building front London',
-               'rue Londres',
-               'street London',
-               'logement Londres',
-               'housing London',
-               'batiment Londres',
-               'building London',
-               'house London',
-               'maison Londres',
-               'chelsea house London',
-               'brick house London',
-               'oxford street london']
-
+# Data scrapping (only if you want to scrap new images from google image)
+DRIVER_PATH = "path/to/google chrome/drivers"
+IMAGES_PATH = "path/to/download/folder"
+N_IMAGES = 100 #number of image downloaded per query
+QUERIES = ['facade paris',
+           'building front paris',
+           'maison typique Paris',
+           'typical house Paris',
+           'logement Paris',
+           'housing Paris',
+           'batiment Paris',
+           'building Paris',
+           'house Paris',
+           'maison Paris'] #exemple of queries for Paris
 
 def fetch_image_urls(query: str, max_links_to_fetch: int, wd: webdriver, sleep_between_interactions: int = 1):
     """Allows the webdriver to look for a query in google image and fetch a number of image links
@@ -139,11 +113,11 @@ if __name__ == '__main__':
     wd = webdriver.Chrome(executable_path=DRIVER_PATH)
 
     # Go through each query and download corresponding images
-    for query in queries:
+    for query in QUERIES:
         wd.get('https://google.com')
         search_box = wd.find_element_by_css_selector('input.gLFyf')
         search_box.send_keys(query)
-        links = fetch_image_urls(query, n_images, wd)
+        links = fetch_image_urls(query, N_IMAGES, wd)
         for i in links:
             persist_image(IMAGES_PATH, query, i)
     wd.quit()
