@@ -10,12 +10,22 @@ from src.infrastructure.data_generator import train_validation_data_generator
 
 
 class ModelTraining:
+    """Implements training for our custom model.
 
-    def __init__(self, model):
+    Attributes
+    ----------
+    model: CustomModel
+    tmp_path: str
+    learning_rate_scheduler: tf.keras.optimizers.schedules.PolynomialDecay
+    checkpoint:
+
+    """
+
+    def __init__(self, model: CustomModel):
         self.model = model
         self.tmp_path = os.path.join(config.MODEL_DIR, 'tmp.hdf5')
 
-    def train(self, train_generator, validation_generator, epochs, kwd):
+    def train(self, train_generator, validation_generator, epochs: int, kwd: dict) -> None:
         """Trains model."""
         self._set_optimization_parameters(kwd)
         self.model.fit(train_generator,
@@ -24,7 +34,7 @@ class ModelTraining:
                        callbacks=[self.checkpoint])
         self._restore_best_model()
 
-    def save(self, path):
+    def save(self, path: str) -> None:
         """Saves model to given path."""
         self.model.save_weights(filepath=path)
 
@@ -52,11 +62,11 @@ class ModelTraining:
             save_best_only=True)
         return checkpoint
 
-    def unfreeze_pretrained_model(self):
+    def unfreeze_pretrained_model(self) -> None:
         """Unfreezes frozen layers."""
         self.model.trainable = True
 
-    def _set_optimization_parameters(self, kwd):
+    def _set_optimization_parameters(self, kwd: dict) -> None:
         """Sets optimizer, loss and metrics."""
         self.model.compile(
             optimizer=tf.keras.optimizers.Adam(**kwd),
@@ -64,7 +74,7 @@ class ModelTraining:
             metrics='accuracy',
         )
 
-    def _restore_best_model(self):
+    def _restore_best_model(self) -> None:
         """Recovers best model from previous training and delete corresponding file."""
         self.model = tf.keras.models.load_model(self.tmp_path)
         os.remove(self.tmp_path)

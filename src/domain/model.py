@@ -1,6 +1,5 @@
 
 import tensorflow as tf
-from tensorflow.keras import Model
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -8,8 +7,17 @@ import src.config.config as config
 
 
 class CustomModel:
+    """Implements our custom architecture.
 
-    def __init__(self, number_classes):
+    Attributes
+    ----------
+    model: tf.keras.Model
+    image_scaler: tf.keras.Sequential
+    pretrained_model: tf.keras.Model
+    specific_task_learner: tf.keras.Sequential
+    """
+
+    def __init__(self, number_classes: int):
         self.number_classes = number_classes
 
     @property
