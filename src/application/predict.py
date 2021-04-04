@@ -1,4 +1,5 @@
 
+import logging
 import numpy as np
 import os
 import tensorflow as tf
@@ -8,17 +9,19 @@ warnings.filterwarnings("ignore")
 import src.config.config as config
 from src.infrastructure.data_generator import load_test_data
 
+logging.basicConfig(format='%(message)s', level=logging.INFO)
+
 if __name__ == '__main__':
 
-    # TODO: logging 'load data'
+    logging.info('\n=========\nLOAD DATA\n=========\n')
 
     test_data = load_test_data()
 
-    # TODO: logging 'load model'
+    logging.info('\n==========\nLOAD MODEL\n==========\n')
 
-    model = tf.keras.models.load_model(os.path.join(MODEL_DIR, FINAL_MODEL_NAME))
+    model = tf.keras.models.load_model(os.path.join(config.MODEL_DIR, config.FINAL_MODEL_FILENAME))
 
-    # TODO: logging 'make predictions'
+    logging.info('\n================\nMAKE PREDICTIONS\n================\n')
 
     predictions = model.predict(test_data)
     y_predictions = np.argmax(predictions, axis=1)
