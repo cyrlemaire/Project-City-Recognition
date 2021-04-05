@@ -1,35 +1,23 @@
+
 import hashlib
 import io
+import os
 from PIL import Image
 import requests
 from selenium import webdriver
 import time
 
-from src.config.config import *
+import src.config.config as config
 
-# Data scrapping (only if you want to scrap new images from google image)
-DRIVER_PATH = "path/to/google chrome/drivers"
-IMAGES_PATH = "path/to/download/folder"
-N_IMAGES = 100 #number of image downloaded per query
-QUERIES = ['facade paris',
-           'building front paris',
-           'maison typique Paris',
-           'typical house Paris',
-           'logement Paris',
-           'housing Paris',
-           'batiment Paris',
-           'building Paris',
-           'house Paris',
-           'maison Paris'] #exemple of queries for Paris
+
+def _scroll_to_end(wd):
+    """Scrolls to the end of the loaded page."""
+    wd.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    time.sleep(sleep_between_interactions)
 
 def fetch_image_urls(query: str, max_links_to_fetch: int, wd: webdriver, sleep_between_interactions: int = 1):
-    """Allows the webdriver to look for a query in google image and fetch a number of image links
-    corresponding to the query"""
-
-    def scroll_to_end(wd):
-        """ Scroll to the end of the loaded page"""
-        wd.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        time.sleep(sleep_between_interactions)
+    """Allows the webdriver to look for a query in Google Image and fetches a number of image links
+    corresponding to the query."""
 
     # build the google query
     search_url = "https://www.google.com/search?safe=off&site=&tbm=isch&source=hp&q={q}&oq={q}&gs_l=img"
@@ -41,7 +29,7 @@ def fetch_image_urls(query: str, max_links_to_fetch: int, wd: webdriver, sleep_b
     image_count = 0
     results_start = 0
     while image_count < max_links_to_fetch:
-        scroll_to_end(wd)
+        _scroll_to_end(wd)
 
         # get all image thumbnail results
         thumbnail_results = wd.find_elements_by_css_selector("img.Q4LuWd")
@@ -77,14 +65,14 @@ def fetch_image_urls(query: str, max_links_to_fetch: int, wd: webdriver, sleep_b
             if load_more_button:
                 wd.execute_script("document.querySelector('.mye4qd').click();")
 
-        # move the result startpoint further down
+        # move the result start point further down
         results_start = len(thumbnail_results)
 
     return image_urls
 
 
 def persist_image(folder_path: str, file_name: str, url: str):
-    """ Download all the images from a set of urls and save them in a deedicated folder"""
+    """Downloads all the images from a set of urls and save them in a dedicated folder."""
     try:
         image_content = requests.get(url).content
 
@@ -110,14 +98,14 @@ def persist_image(folder_path: str, file_name: str, url: str):
 if __name__ == '__main__':
 
     # instantiate the webdriver
-    wd = webdriver.Chrome(executable_path=DRIVER_PATH)
+    wd = webdriver.Chrome(executable_path=config.DRIVER_PATH)
 
     # Go through each query and download corresponding images
-    for query in QUERIES:
+    for query in config.QUERIES:
         wd.get('https://google.com')
         search_box = wd.find_element_by_css_selector('input.gLFyf')
         search_box.send_keys(query)
-        links = fetch_image_urls(query, N_IMAGES, wd)
+        links = fetch_image_urls(query, config.N_IMAGES, wd)
         for i in links:
-            persist_image(IMAGES_PATH, query, i)
+            persist_image(config.IMAGES_PATH, query, i)
     wd.quit()
