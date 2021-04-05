@@ -19,7 +19,7 @@ if __name__ == '__main__':
 
     logging.info('\n==========\nLOAD MODEL\n==========\n')
 
-    model = tf.keras.models.load_model(os.path.join(config.MODEL_DIR, config.FINAL_MODEL_FILENAME))
+    model = tf.keras.models.load_model(os.path.join(MODEL_DIR, FINAL_MODEL_NAME))
 
     logging.info('\n================\nMAKE PREDICTIONS\n================\n')
 
