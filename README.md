@@ -1,68 +1,95 @@
-# Project N°2 - Yotta Academy - Advanced ML : Project City Recognition 
+# Project City Recognition
 
-Copyright : Olivier Collier, Cyril LEMAIRE & Julien SADOUN
+This is Yotta’s project #2 by Olivier Collier, Cyril Lemaire and Julien Sadoun. We designed an application that can recognize the city in which a given picture has been taken. Our algorithm analyses architecture, colors and patterns to make a prediction.
 
-## Context
+We proposed a solution based on transfer learning, building on DenseNet201. It creates a proof of concept, that takes only five cities into account: Amsterdam, London, Paris, Strasbourg and Venice.
 
-As an assignment, we created a computer vision program able to identify the city of origin of a random building, based on its picture. The model created for this purpose is based on the DenseNet (Dense Convolutional Network) model, and works on 5 cities: London, Paris, Amsterdam, Venice and Strasbourg. An Stre
+# Prerequisites
 
-## Program interface
+Our project requires the following tools:
 
-TODO => streamlit UI
 
-## Main code
+* Python 3.8, see download page [here](https://www.python.org/downloads/),
 
-The following sections describe the source code of the project and explain how to use it to retrain the model on the city images dataset.
 
-## Project Arborescence
-TODO
+* wget, see download page [here](https://www.gnu.org/software/wget/),
 
-## Pre-requisites
 
-Tools needed to run the code :
+* Poetry, see download page [here](https://python-poetry.org/docs/).
 
-- wget: Please find the documentatioin [at this address](https://www.gnu.org/software/wget/)
-- Poetry : Please find the documentation [at this address](https://python-poetry.org/docs/)
-- Python 3.8.5 : Please find the documentation [at this address](https://www.python.org/downloads/release/python-385/)
+# Getting started
 
-## Getting Started
 
-### 1. Clone this repository
-```
-$ git clone <this project>
-$ cd <this project>
-```
-### 2. Setup your environment
-
-First, please install the required dependencies with [Poetry](https://python-poetry.org).
-In the folder containing the poetry.toml, write in your terminal
-```
-$ poetry install
-```
-For this specific purpose, you can use the env use command to tell Poetry which Python version to use for the current project:
+1. **Clone this repository**
 
 ```
-$ poetry env use /full/path/to/python
+git clone <this project>
+cd <this project>
 ```
-### 3. Download the dataset
 
-To download the train pictures in the TRAIN_DATA_DIR directory, simply exectute this command:
-````
-$ TRAIN_DATA_DIR=<your train directory path>
-$ cd $TRAIN_DATA_DIR
-$ wget “https://www.dropbox.com/sh/1ks98px6egwjp31/AAAZh1LuvQzs5-9Cu9u2dQHka?dl=0” --content-disposition
-$ unzip data_ProjectCityRecognition.zip
-$ rm data_ProjectCityRecognition.zip
+
+1. **Set up virtual environment**
+
+Set up a Poetry environment by running the following command:
+
 ```
-###4. Complete config.py file
+poetry install
+poetry shell
+```
 
-TODO
+If you have several versions of Python on your computer, you may need to run the following command prior to installing Poetry:
 
-### 5. Train the model
+```
+poetry env use /full/path/to/python3.8
+```
 
-TODO
 
-###6. Predict
+1. **Download image dataset**
 
-TODO ?
+To download the necessary image dataset for training and testing, run the following commands from the repository root:
 
+```
+wget “https://www.dropbox.com/sh/1ks98px6egwjp31/AAAZh1LuvQzs5-9Cu9u2dQHka?dl=0” --content-disposition
+unzip data.zip && rm data.zip
+```
+
+
+1. **Train the model**
+
+To train a model using the previously downloaded dataset, run the following command from the repository root:
+
+```
+poetry shell
+poetry run python src/application/train.py
+```
+
+
+1. **Make predictions from the model**
+
+To test our final model (not the one trained above, but the one we selected), run the following command from the repository root:
+
+```
+poetry shell
+poetry run python src/application/predict.py
+```
+
+
+1. **Test our web-app!**
+
+To access our web-app and interactively use your own pictures, run the following command from the repository root:
+
+```
+poetry shell
+streamlit run src/application/application.py
+```
+
+# Indices and tables
+
+
+* Index
+
+
+* Module Index
+
+
+* Search Page
