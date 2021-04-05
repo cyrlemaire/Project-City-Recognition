@@ -28,7 +28,7 @@ cd <this project>
 ```
 
 
-1. **Set up virtual environment**
+2. **Set up virtual environment**
 
 Set up a Poetry environment by running the following command:
 
@@ -44,7 +44,7 @@ poetry env use /full/path/to/python3.8
 ```
 
 
-1. **Download image dataset**
+3. **Download image dataset**
 
 To download the necessary image dataset for training and testing, run the following commands from the repository root:
 
@@ -54,7 +54,7 @@ unzip data.zip && rm data.zip
 ```
 
 
-1. **Train the model**
+4. **Train the model**
 
 To train a model using the previously downloaded dataset, run the following command from the repository root:
 
@@ -64,7 +64,7 @@ poetry run python src/application/train.py
 ```
 
 
-1. **Make predictions from the model**
+5. **Make predictions from the model**
 
 To test our final model (not the one trained above, but the one we selected), run the following command from the repository root:
 
@@ -74,7 +74,7 @@ poetry run python src/application/predict.py
 ```
 
 
-1. **Test our web-app!**
+6. **Test our web-app!**
 
 To access our web-app and interactively use your own pictures, run the following command from the repository root:
 
