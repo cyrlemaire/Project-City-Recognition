@@ -53,7 +53,7 @@ To download the necessary image dataset for training and testing, run the follow
 
 4. **Train the model**
 
-To train our model using the previously downloaded dataset, run the following command from the repository root:
+To train a model using the previously downloaded dataset, run the following command from the repository root:
 
 .. code-block:: bash
 
@@ -62,7 +62,22 @@ To train our model using the previously downloaded dataset, run the following co
 
 5. **Make predictions from the model**
 
-To test the 
+To test our final model (not the one trained above, but the one we selected), run the following command from the repository root:
+
+.. code-block:: bash
+
+    poetry shell
+    poetry run python src/application/predict.py
+
+6. **Test our web-app!**
+
+To access our web-app and interactively use your own pictures, run the following command from the repository root:
+
+.. code-block:: bash
+
+    poetry shell
+    streamlit run src/application/application.py
+ 
 
 .. toctree::
    :maxdepth: 2

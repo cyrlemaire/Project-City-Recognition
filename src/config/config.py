@@ -3,8 +3,8 @@ import os
 
 # Directories
 REPO_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
-TRAIN_DATA_DIR = os.path.join(REPO_DIR, 'data/')
-TEST_DATA_DIR = TRAIN_DATA_DIR
+TRAIN_DATA_DIR = os.path.join(REPO_DIR, 'data/train/')
+TEST_DATA_DIR = os.path.join(REPO_DIR, 'data/test/')
 MODEL_DIR = os.path.join(REPO_DIR, 'models/')
 TRAINED_MODEL_FILENAME = 'trained_model.hdf5'
 FINAL_MODEL_FILENAME = 'PCR_model.hdf5'
