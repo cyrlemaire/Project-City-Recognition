@@ -17,7 +17,7 @@ from PIL import Image, ImageOps
 
 model = tf.keras.models.load_model(os.path.join(config.MODEL_DIR, 'PCR_model.hdf5'))
 st.write("Bienvenue dans notre modèle de prédiction de ville à partir d'une photo ! Le principe est simple : insérez une photo de façade de bâtiment, et le modèle essaiera de deviner la ville dont la photo provient (Parmi les villes de Paris, Amsterdam, Strasbourg, Londres et Venise) !")
-image_data = st.file_uploader("Veuillez insérer une image afin de commencer la prédiction :", type=["jpg", "png"])
+image_data = st.file_uploader("Veuillez insérer une image afin de commencer la prédiction :", type=["jpg", "jpeg", "png"])
 
 
 def import_and_predict(image_data, model):

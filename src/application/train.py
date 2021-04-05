@@ -1,4 +1,5 @@
 
+import logging
 import os
 import tensorflow as tf
 import warnings
@@ -7,6 +8,8 @@ warnings.filterwarnings("ignore")
 import src.config.config as config
 from src.domain.model import CustomModel
 from src.infrastructure.data_generator import train_validation_data_generator
+
+logging.basicConfig(format='%(message)s', level=logging.INFO)
 
 
 class ModelTraining:
@@ -72,23 +75,23 @@ class ModelTraining:
 
 if __name__ == '__main__':
 
-    # TODO: logging 'loading data'
+    logging.info('\n=========\nLOAD DATA\n=========\n')
 
     train_generator, validation_generator = train_validation_data_generator()
 
-    # TODO: logging 'making model'
+    logging.info('\n============\nMAKING MODEL\n============\n')
 
     custom_model = CustomModel(len(config.CLASSES))
     custom_model = ModelTraining(custom_model.model)
 
-    # TODO: logging 'train'
+    logging.info('\n=====\nTRAIN\n=====\n')
 
     custom_model.train(train_generator=train_generator,
                        validation_generator=validation_generator,
                        epochs=config.EPOCHS,
                        kwd={'learning_rate': custom_model.learning_rate_scheduler})
 
-    # TODO: logging 'fine-tuning'
+    logging.info('\n===========\nFINE TUNING\n===========\n')
 
     custom_model.unfreeze_pretrained_model()
     custom_model.train(train_generator=train_generator,
@@ -96,7 +99,7 @@ if __name__ == '__main__':
                        epochs=config.EPOCHS_RETRAIN,
                        kwd={'learning_rate': config.FINE_TUNING_LEARNING_RATE})
 
-    # TODO: logging 'saving model'
+    logging.info('\n============\nSAVING MODEL\n============\n')
 
     trained_model_path = os.path.join(config.MODEL_DIR, config.TRAINED_MODEL_FILENAME)
     custom_model.save(trained_model_path)
