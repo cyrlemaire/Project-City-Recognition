@@ -82,14 +82,3 @@ To access our web-app and interactively use your own pictures, run the following
 poetry shell
 streamlit run src/application/application.py
 ```
-
-# Indices and tables
-
-
-* Index
-
-
-* Module Index
-
-
-* Search Page
