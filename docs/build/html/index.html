@@ -1,0 +1,283 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Project City Recognition &mdash; Project City Recognition 1.0.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/images/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/faculty.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans|Roboto:400,700|Roboto+Mono:400,700&display=swap" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+  
+    <a class="heading heading-extra-margin" href="#">
+      <div class="logo-box logo-box-large">
+        <img class="logo" src="_static/images/faculty.svg"/>
+      </div>
+      
+        <span class="icon icon-home"> Project City Recognition</span>
+      
+    </a>
+  
+
+  
+    
+    
+  
+
+  
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Project City Recognition</a></li>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li><a class="reference internal" href="#getting-started">Getting started</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+</div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Project City Recognition</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+
+  
+
+  
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+  <li class="breadcrumb"><a href="#">Project City Recognition</a> &raquo;</li>
+    
+  <li class="breadcrumb">Project City Recognition</li>
+
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="project-city-recognition">
+<h1>Project City Recognition<a class="headerlink" href="#project-city-recognition" title="Permalink to this headline">¶</a></h1>
+<p>This is Yotta’s project #2 by Olivier Collier, Cyril Lemaire and Julien Sadoun. We designed an application that can recognize the city in which a given picture has been taken. Our algorithm analyses architecture, colors and patterns to make a prediction.</p>
+<p>We proposed a solution based on transfer learning, building on DenseNet201. It creates a proof of concept, that takes only five cities into account: Amsterdam, London, Paris, Strasbourg and Venice.</p>
+</div>
+<div class="section" id="prerequisites">
+<h1>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h1>
+<p>Our project requires the following tools:</p>
+<ul class="simple">
+<li><p>Python 3.8, see download page <a class="reference external" href="https://www.python.org/downloads/">here</a>,</p></li>
+<li><p>wget, see download page <a class="reference external" href="https://www.gnu.org/software/wget/">here</a>,</p></li>
+<li><p>Poetry, see download page <a class="reference external" href="https://python-poetry.org/docs/">here</a>.</p></li>
+</ul>
+</div>
+<div class="section" id="getting-started">
+<h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<ol class="arabic simple">
+<li><p><strong>Clone this repository</strong></p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone &lt;this project&gt;
+<span class="nb">cd</span> &lt;this project&gt;
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p><strong>Set up virtual environment</strong></p></li>
+</ol>
+<p>Set up a Poetry environment by running the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>poetry install
+poetry shell
+</pre></div>
+</div>
+<p>If you have several versions of Python on your computer, you may need to run the following command prior to installing Poetry:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>poetry env use /full/path/to/python3.8
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p><strong>Download image dataset</strong></p></li>
+</ol>
+<p>To download the necessary image dataset for training and testing, run the following commands from the repository root:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget “https://www.dropbox.com/sh/1ks98px6egwjp31/AAAZh1LuvQzs5-9Cu9u2dQHka?dl<span class="o">=</span><span class="m">0</span>” --content-disposition
+unzip data.zip <span class="o">&amp;&amp;</span> rm data.zip
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p><strong>Train the model</strong></p></li>
+</ol>
+<p>To train a model using the previously downloaded dataset, run the following command from the repository root:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>poetry shell
+poetry run python src/application/train.py
+</pre></div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p><strong>Make predictions from the model</strong></p></li>
+</ol>
+<p>To test our final model (not the one trained above, but the one we selected), run the following command from the repository root:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>poetry shell
+poetry run python src/application/predict.py
+</pre></div>
+</div>
+<ol class="arabic simple" start="6">
+<li><p><strong>Test our web-app!</strong></p></li>
+</ol>
+<p>To access our web-app and interactively use your own pictures, run the following command from the repository root:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>poetry shell
+streamlit run src/application/application.py
+</pre></div>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, Olivier Collier, Cyril Lemaire and Julien Sadoun
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+
+
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
