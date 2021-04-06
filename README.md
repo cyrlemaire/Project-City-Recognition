@@ -75,11 +75,26 @@ poetry run python src/application/predict.py
 To access our web-app and interactively use your own pictures, run the following command from the repository root:
 
 ```
-poetry shell
 streamlit run src/application/application.py
 ```
 
-7. **Documentation**
+7. **Image scrapping**
+
+To create your own image dataset, you can use our script to scrap images on Google. First complete the src/config/scrap_config_template.py file with the folder in witch you want to dowload images and the queries to use in Google Image. Then run the following command from the repository root:
+
+```
+poetry run python src/infrastructure/data_scraping.py
+```
+
+If you have duplicates in your folder you can run:
+
+```
+poetry run python src/infrastructure/remove_duplicates.py
+```
+
+to delete them.
+
+8. **Documentation**
 
 If you want to consult the project documentation, run the following command from the repository root:
 
@@ -129,6 +144,7 @@ open docs/build/html/index.html
     ├── config
     │   ├── __init__.py
     │   └── config.py
+    │   └── scrap_config_template.py
     ├── domain
     │   ├── __init__.py
     │   └── model.py
