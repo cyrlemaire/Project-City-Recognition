@@ -90,15 +90,11 @@ open docs/build/html/index.html
 
 # Repository architecture
 
-.
+```
 ├── README.md
-
 ├── data
-
 │   ├── test_data
-
 │   └── train_data
-
 ├── docs
 │   ├── Makefile
 │   ├── build
@@ -141,4 +137,4 @@ open docs/build/html/index.html
         ├── data_generator.py
         ├── data_scraping.py
         └── remove_duplicates.py
-
+```
