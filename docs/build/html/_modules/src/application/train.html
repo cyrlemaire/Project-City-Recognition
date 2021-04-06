@@ -1,0 +1,313 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>src.application.train &mdash; Project City Recognition 1.0.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/images/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/faculty.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans|Roboto:400,700|Roboto+Mono:400,700&display=swap" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+  
+    <a class="heading heading-extra-margin" href="../../../index.html">
+      <div class="logo-box logo-box-large">
+        <img class="logo" src="../../../_static/images/faculty.svg"/>
+      </div>
+      
+        <span class="icon icon-home"> Project City Recognition</span>
+      
+    </a>
+  
+
+  
+    
+    
+  
+
+  
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Project City Recognition</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+
+  
+
+  
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+  <li class="breadcrumb"><a href="../../../index.html">Project City Recognition</a> &raquo;</li>
+    
+      <li class="breadcrumb"><a href="../../index.html">Module code</a> &raquo;</li>
+    
+  <li class="breadcrumb">src.application.train</li>
+
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for src.application.train</h1><div class="highlight"><pre>
+<span></span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">src.config.config</span> <span class="k">as</span> <span class="nn">config</span>
+<span class="kn">from</span> <span class="nn">src.domain.model</span> <span class="kn">import</span> <span class="n">CustomModel</span>
+<span class="kn">from</span> <span class="nn">src.infrastructure.data_generator</span> <span class="kn">import</span> <span class="n">train_validation_data_generator</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="ModelTraining"><a class="viewcode-back" href="../../../src.application.html#src.application.train.ModelTraining">[docs]</a><span class="k">class</span> <span class="nc">ModelTraining</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Implements training for our custom model.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    model: CustomModel</span>
+<span class="sd">    tmp_path: str</span>
+<span class="sd">    learning_rate_scheduler: tf.keras.optimizers.schedules.PolynomialDecay</span>
+<span class="sd">    checkpoint:</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">CustomModel</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tmp_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">MODEL_DIR</span><span class="p">,</span> <span class="s1">&#39;tmp.hdf5&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ModelTraining.train"><a class="viewcode-back" href="../../../src.application.html#src.application.train.ModelTraining.train">[docs]</a>    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train_generator</span><span class="p">,</span> <span class="n">validation_generator</span><span class="p">,</span> <span class="n">epochs</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">kwd</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Trains model.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_optimization_parameters</span><span class="p">(</span><span class="n">kwd</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_generator</span><span class="p">,</span>
+                       <span class="n">validation_data</span><span class="o">=</span><span class="n">validation_generator</span><span class="p">,</span>
+                       <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span>
+                       <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">checkpoint</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_restore_best_model</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ModelTraining.save"><a class="viewcode-back" href="../../../src.application.html#src.application.train.ModelTraining.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Saves model to given path.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">save_weights</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">path</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">learning_rate_scheduler</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Custom learning rate scheduler.&quot;&quot;&quot;</span>
+        <span class="n">lr_scheduler</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">schedules</span><span class="o">.</span><span class="n">PolynomialDecay</span><span class="p">(</span>
+            <span class="n">initial_learning_rate</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">INITIAL_LEARNING_RATE</span><span class="p">,</span>
+            <span class="n">end_learning_rate</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">FINAL_LEARNING_RATE</span><span class="p">,</span>
+            <span class="n">decay_steps</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">DECAY_STEPS</span><span class="p">,</span>
+            <span class="n">power</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+            <span class="n">cycle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="kc">None</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">lr_scheduler</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">checkpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Checkpoint callback.&quot;&quot;&quot;</span>
+        <span class="n">checkpoint</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">ModelCheckpoint</span><span class="p">(</span>
+            <span class="n">filepath</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tmp_path</span><span class="p">,</span>
+            <span class="n">monitor</span><span class="o">=</span><span class="s1">&#39;val_accuracy&#39;</span><span class="p">,</span>
+            <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;max&#39;</span><span class="p">,</span>
+            <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>  <span class="c1"># TODO? logging?</span>
+            <span class="n">save_best_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">checkpoint</span>
+
+<div class="viewcode-block" id="ModelTraining.unfreeze_pretrained_model"><a class="viewcode-back" href="../../../src.application.html#src.application.train.ModelTraining.unfreeze_pretrained_model">[docs]</a>    <span class="k">def</span> <span class="nf">unfreeze_pretrained_model</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Unfreezes frozen layers.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">trainable</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+    <span class="k">def</span> <span class="nf">_set_optimization_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kwd</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Sets optimizer, loss and metrics.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+            <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="o">**</span><span class="n">kwd</span><span class="p">),</span>
+            <span class="n">loss</span><span class="o">=</span><span class="s1">&#39;categorical_crossentropy&#39;</span><span class="p">,</span>
+            <span class="n">metrics</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_restore_best_model</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Recovers best model from previous training and delete corresponding file.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tmp_path</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tmp_path</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">=========</span><span class="se">\n</span><span class="s1">LOAD DATA</span><span class="se">\n</span><span class="s1">=========</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="n">train_generator</span><span class="p">,</span> <span class="n">validation_generator</span> <span class="o">=</span> <span class="n">train_validation_data_generator</span><span class="p">()</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">============</span><span class="se">\n</span><span class="s1">MAKING MODEL</span><span class="se">\n</span><span class="s1">============</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="n">custom_model</span> <span class="o">=</span> <span class="n">CustomModel</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">CLASSES</span><span class="p">))</span>
+    <span class="n">custom_model</span> <span class="o">=</span> <span class="n">ModelTraining</span><span class="p">(</span><span class="n">custom_model</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">=====</span><span class="se">\n</span><span class="s1">TRAIN</span><span class="se">\n</span><span class="s1">=====</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="n">custom_model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">train_generator</span><span class="o">=</span><span class="n">train_generator</span><span class="p">,</span>
+                       <span class="n">validation_generator</span><span class="o">=</span><span class="n">validation_generator</span><span class="p">,</span>
+                       <span class="n">epochs</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">EPOCHS</span><span class="p">,</span>
+                       <span class="n">kwd</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="n">custom_model</span><span class="o">.</span><span class="n">learning_rate_scheduler</span><span class="p">})</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">===========</span><span class="se">\n</span><span class="s1">FINE TUNING</span><span class="se">\n</span><span class="s1">===========</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="n">custom_model</span><span class="o">.</span><span class="n">unfreeze_pretrained_model</span><span class="p">()</span>
+    <span class="n">custom_model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">train_generator</span><span class="o">=</span><span class="n">train_generator</span><span class="p">,</span>
+                       <span class="n">validation_generator</span><span class="o">=</span><span class="n">validation_generator</span><span class="p">,</span>
+                       <span class="n">epochs</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">EPOCHS_RETRAIN</span><span class="p">,</span>
+                       <span class="n">kwd</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">FINE_TUNING_LEARNING_RATE</span><span class="p">})</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">============</span><span class="se">\n</span><span class="s1">SAVING MODEL</span><span class="se">\n</span><span class="s1">============</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="n">trained_model_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">MODEL_DIR</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">TRAINED_MODEL_FILENAME</span><span class="p">)</span>
+    <span class="n">custom_model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">trained_model_path</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, Olivier Collier, Cyril Lemaire and Julien Sadoun
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+
+
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

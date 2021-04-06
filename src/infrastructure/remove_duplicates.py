@@ -1,14 +1,12 @@
-from matplotlib.pyplot import imread
+
+import logging
 import matplotlib.pyplot as plt
 import os
 from PIL import Image
 
-os.chdir(r'/Users/cyrillemaire/Documents/Yotta/Project/Project_2/pictures/Venise')
-print(os.getcwd())
-
 files_list = os.listdir('.')
 
-print(len(files_list))
+logging.info(f"{len(files_list)} files")
 
 duplicates = []
 hash_keys = dict()
@@ -33,15 +31,14 @@ for index, filename in enumerate(os.listdir('.')):
             else:
                 duplicates.append((index, hash_keys[filehash]))
 
-print(len(duplicates), "duplicates have been found")
-print(duplicates)
+logging.info(f"{len(duplicates)} duplicates have been found")
 
 for file_indexes in duplicates[:30]:
     try:
-        plt.subplot(121), plt.imshow(imread(files_list[file_indexes[1]]))
+        plt.subplot(121), plt.imshow(plt.imread(files_list[file_indexes[1]]))
         plt.title(file_indexes[1]), plt.xticks([]), plt.yticks([])
 
-        plt.subplot(122), plt.imshow(imread(files_list[file_indexes[0]]))
+        plt.subplot(122), plt.imshow(plt.imread(files_list[file_indexes[0]]))
         plt.title(str(file_indexes[0]) + 'duplicate'), plt.xticks([]), plt.yticks([])
         plt.show()
 
