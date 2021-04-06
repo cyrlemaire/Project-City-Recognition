@@ -57,7 +57,6 @@ unzip data.zip && rm data.zip
 To train a model using the previously downloaded dataset, run the following command from the repository root:
 
 ```
-poetry shell
 poetry run python src/application/train.py
 ```
 
@@ -67,7 +66,6 @@ poetry run python src/application/train.py
 To test our final model (not the one trained above, but the one we selected), run the following command from the repository root:
 
 ```
-poetry shell
 poetry run python src/application/predict.py
 ```
 
@@ -80,3 +78,63 @@ To access our web-app and interactively use your own pictures, run the following
 poetry shell
 streamlit run src/application/application.py
 ```
+
+7. **Documentation**
+
+If you want to consult the project documentation, run the following command from the repository root:
+
+```
+open docs/build/html/index.html
+```
+
+
+# Repository architecture
+
+.
+├── README.md
+├── data
+│   ├── test_data
+│   └── train_data
+├── docs
+│   ├── Makefile
+│   ├── build
+│   │   └── html
+│   │       ├── genindex.html
+│   │       ├── index.html
+│   │       ├── modules.html
+│   │       ├── objects.inv
+│   │       ├── py-modindex.html
+│   │       ├── search.html
+│   │       ├── searchindex.js
+│   │       ├── src.application.html
+│   │       ├── src.config.html
+│   │       ├── src.domain.html
+│   │       ├── src.html
+│   │       └── src.infrastructure.html
+│   ├── commands.rst
+│   ├── conf.py
+│   ├── getting-started.rst
+│   ├── index.rst
+│   └── make.bat
+├── models
+│   └── PCR_model.hdf5
+├── pyproject.toml
+└── src
+    ├── __init__.py
+    ├── application
+    │   ├── __init__.py
+    │   ├── application.py
+    │   ├── predict.py
+    │   └── train.py
+    ├── config
+    │   ├── __init__.py
+    │   └── config.py
+    ├── domain
+    │   ├── __init__.py
+    │   └── model.py
+    └── infrastructure
+        ├── __init__.py
+        ├── data_generator.py
+        ├── data_scraping.py
+        └── remove_duplicates.py
+
