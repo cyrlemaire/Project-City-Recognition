@@ -92,9 +92,13 @@ open docs/build/html/index.html
 
 .
 ├── README.md
+
 ├── data
+
 │   ├── test_data
+
 │   └── train_data
+
 ├── docs
 │   ├── Makefile
 │   ├── build
