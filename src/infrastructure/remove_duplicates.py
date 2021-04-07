@@ -4,6 +4,12 @@ import matplotlib.pyplot as plt
 import os
 from PIL import Image
 
+from src.config.scrap_config_template import *
+
+
+os.chdir(PATH_IMAGE_DUPLICATES)
+
+
 files_list = os.listdir('.')
 
 logging.info(f"{len(files_list)} files")

@@ -7,7 +7,7 @@ import requests
 from selenium import webdriver
 import time
 
-import src.config.config as config
+import src.config.scrap_config_template as config
 
 
 def _scroll_to_end(wd):
