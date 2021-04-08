@@ -47,8 +47,9 @@ poetry env use /full/path/to/python3.8
 To download the necessary image dataset for training and testing, run the following commands from the repository root:
 
 ```
-wget “https://www.dropbox.com/sh/1ks98px6egwjp31/AAAZh1LuvQzs5-9Cu9u2dQHka?dl=0” --content-disposition
-unzip data.zip && rm data.zip
+wget 'https://www.dropbox.com/sh/1ks98px6egwjp31/AAAZh1LuvQzs5-9Cu9u2dQHka?dl=0' --content-disposition
+unzip data.zip
+rm data.zip
 ```
 
 
