@@ -42,7 +42,14 @@ poetry env use /full/path/to/python3.8
 ```
 
 
-3. **Download image dataset**
+3. **Download trained model and/or image dataset **
+
+To download the trained model, run the following commands from the repository root:
+```
+wget 'https://www.dropbox.com/sh/f2ldmcezg8jhzid/AACnJsiQufdq7z5fZ4ZNg98ha?dl=0' --content-disposition
+unzip models.zip
+rm models.zip
+```
 
 To download the necessary image dataset for training and testing, run the following commands from the repository root:
 
@@ -64,7 +71,7 @@ poetry run python src/application/train.py
 
 5. **Make predictions from the model**
 
-To test our final model (not the one trained above, but the one we selected), run the following command from the repository root:
+To test our final model (not the one trained above, but the one downloaded), run the following command from the repository root:
 
 ```
 poetry run python src/application/predict.py
